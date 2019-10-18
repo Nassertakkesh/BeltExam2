@@ -1,0 +1,60 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+        @model Activity
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to the Wedding Planner</h1>
+
+</div>
+
+<a class = "float-right btn btn-primary"asp-controller="home" asp-action="logout" >
+         Logout
+        </a>
+
+<br>
+<h3 class="text-center">Plan Your Wedding</h3>
+<hr>
+
+
+
+<form asp-action="AddingActivity" asp-controller="Home">
+          <div>
+  <div class="form-group">
+    <label asp-for="Title"></label>
+    <span class="text-danger font-weight-bold" asp-validation-for="Title"></span>
+    <input class="form-control" asp-for="Title">
+  </div>
+
+  <div class="form-group">
+    <label asp-for="ActivityDate"></label>
+    <span class="text-danger font-weight-bold" asp-validation-for="ActivityDate"></span>
+    <input class="form-control" asp-for="ActivityDate" type="Date">
+  </div>
+
+  <div class="form-group">
+    <label asp-for="Duration"></label>
+    <span class="text-danger font-weight-bold" asp-validation-for="Duration"></span>
+    <input class="form-control" asp-for="Duration" >
+  </div>
+
+
+  <div class="form-group">
+    <label asp-for="TimeSpan"></label>
+        <span class="text-danger font-weight-bold" asp-validation-for="TimeSpan"></span>
+    <Select asp-for="TimeSpan">
+      <option asp-for="TimeSpan" value="Hours">Hours</option>
+      <option  asp-for="TimeSpan" value="Day">Day</option>
+      <option asp-for="TimeSpan"  value="Minutes">Minutes</option>
+    </Select>
+  </div>
+
+    <div class="form-group">
+    <label asp-for="Description"></label>
+    <span class="text-danger font-weight-bold" asp-validation-for="Description"></span>
+    <input class="form-control" asp-for="Description" rows="3" >
+  </div>
+
+  <button class="btn btn-info" type="submit">Lets Get ITTTTT</button>
+</div>
+</form>

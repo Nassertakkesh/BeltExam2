@@ -1,0 +1,81 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to the Exam 2, @ViewBag.ThisUser.FirstName</h1>
+
+</div>
+
+<!-- <a class = "float-right btn btn-primary"asp-controller="home" asp-action="logout" >
+         Logout
+        </a> -->
+        <h1></h1>
+<br>
+<table class="table">
+
+  <thead>
+    <tr>
+        <th scope="col"> Activity</th>
+        <th scope="col"> Date and Time</th>
+        <th scope="col"> Duration</th>
+        <th scope="col"> Event Creator</th>
+        <th scope="col"> Number of Participants</th> 
+        <th scope="col"> Action</th>
+    </tr>
+  </thead>
+  <tbody>
+     @foreach(var ThisActivity in @ViewBag.allTheWeddings)
+      {
+    <tr>
+        
+      <td>   <a asp-controller="Home" asp-action="ActivityDetail" asp-route-id="@ThisActivity.ActivityId"  >
+        @ThisActivity.Title </a></td>
+        <td>@ThisActivity.ActivityDate </td>
+        <td>@ThisActivity.Duration @ThisActivity.TimeSpan</td>
+        <td>@ThisActivity.Creator.FirstName @ThisActivity.Creator.LastName </td>
+        <td>@ThisActivity.Attendees.Count </td>
+        <td>
+          
+          
+            @{int Guestidnum=0;}
+
+            @if(ThisActivity.Creator.UserId  ==  @ViewBag.UID){
+                <a asp-controller="Home" asp-action="DeleteActivity" asp-route-id="@ThisActivity.ActivityId">Delete </a> 
+            }
+            else
+            {
+                bool isGuestInList = false;
+                foreach( var i in ThisActivity.Attendees )
+                {
+                    if(i.UserId == @ViewBag.UID)
+                    {
+                        isGuestInList = true;
+                        Guestidnum = i.PlayerId;
+                        break;
+                        
+                    }
+                }
+                if(isGuestInList == false)
+                {
+                    <a asp-controller="Home" asp-action="Join" asp-route-id="@ThisActivity.ActivityId">Join </a> 
+                }
+                else
+                {
+                <a asp-controller="Home" asp-action="Leave" asp-route-id="@Guestidnum">Leave </a> 
+                }
+            }
+          
+          
+          
+          
+           </td>
+
+    </tr>
+      }
+  </tbody>
+</table>
+
+<a class = "float-right btn btn-primary"asp-controller="home" asp-action="AddNewActivity" >
+         Add a New Activity!
+        </a>

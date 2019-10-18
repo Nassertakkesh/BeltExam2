@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+        @model Activity
+
+<div class="text-center">
+    <h1 class="text-center">@ViewBag.ActivityDetailsPageInfo.Title 
+<hr></h1>
+<h2>@ViewBag.ActivityDetailsPageInfo.Creator.FirstName @ViewBag.ActivityDetailsPageInfo.Creator.LastName </h2>
+
+</div>
+
+<a class = "float-right btn btn-primary"asp-controller="home" asp-action="logout" >
+         Logout
+        </a>
+
+            @{int Guestidnum=0;}
+            @if(ViewBag.thisActivity.Creator.UserId  ==  @ViewBag.UID){
+                <a asp-controller="Home" asp-action="DeleteActivity" asp-route-id="@ViewBag.thisActivity.ActivityId">Delete </a> 
+            }
+            else
+            {
+                bool isGuestInList = false;
+                foreach( var i in ViewBag.thisActivity.Attendees )
+                {
+                    if(i.UserId == @ViewBag.UID)
+                    {
+                        isGuestInList = true;
+                        Guestidnum = i.PlayerId;
+                        break;
+                        
+                    }
+                }
+                if(isGuestInList == false)
+                {
+                    <a asp-controller="Home" asp-action="Join" asp-route-id="@ViewBag.thisActivity.ActivityId">Join </a> 
+                }
+                else
+                {
+                <a asp-controller="Home" asp-action="Leave" asp-route-id="@Guestidnum">Leave </a> 
+                }
+            }
+      
+          
+
+
+
+
+
+
+
+<br>
+
+
+<h4>Description: @ViewBag.ActivityDetailsPageInfo.Description</h4>
+<br>
+<br>
+<h4>Date:@ViewBag.ActivityDetailsPageInfo.ActivityDate</h4>
+<br>
+<br>
+<h4>Time Duration: @ViewBag.ActivityDetailsPageInfo.Duration @ViewBag.ActivityDetailsPageInfo.TimeSpan</h4>
+<br>
+<br>
+<h4>Description: @ViewBag.ActivityDetailsPageInfo.Description</h4>
+
+<br>
+<br>
+<ul> Guests:
+    @foreach(var GuestsAtParty in ViewBag.ActivityDetailsPageInfo.Attendees)
+    {
+    <li>@GuestsAtParty.Attendees.FirstName</li>
+    }
+</ul>
+
